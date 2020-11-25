@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+source "bin/_support/step.sh"
+
+bin/dev/update
+bin/dev/test
+step "Auditing" "mix deps.audit"
+step "Pushing" "git push origin HEAD"

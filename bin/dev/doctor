@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+source "bin/_support/cecho.sh"
+source "bin/_support/check.sh"
+source "bin/_support/step.sh"
+
+check "asdf: installed" \
+  "which asdf" \
+  "git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.8 && echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bash_profile && echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bash_profile && asdf update"
+
+check "asdf: erlang plugin installed" \
+  "asdf plugin-list | grep erlang" \
+  "asdf plugin-add erlang"
+
+check "asdf: elixir plugin installed" \
+  "asdf plugin-list | grep elixir" \
+  "asdf plugin-add elixir"
+
+check "asdf: tools are installed" \
+  "asdf which erl > /dev/null && asdf which elixir > /dev/null" \
+  "asdf install"
+
+check "hex installed" \
+  "mix local.hex --if-missing --force" \
+  "mix local.hex --force"
+
+check "rebar3 installed" \
+  "mix local.rebar --if-missing --force" \
+  "mix local.rebar --force"
+
+check "deps: elixir deps installed?" \
+  "test $(mix deps | grep -c 'the dependency is not available') -eq 0" \
+  "mix deps.get"
