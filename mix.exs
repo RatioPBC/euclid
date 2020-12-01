@@ -17,7 +17,8 @@ defmodule Euclid.MixProject do
           README.md
           VERSION
         ],
-        licenses: ["MIT-0"]
+        licenses: ["MIT-0"],
+        links: %{}
       ],
       source_url: "https://github.com/geometerio/euclid",
       start_permanent: Mix.env() == :prod,
