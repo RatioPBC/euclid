@@ -39,10 +39,20 @@ end
 
 ## Development
 
+### Getting started
+
+After cloning this repo, run `bin/dev/doctor`. If it finds a problem, it will *suggest* a remedy,
+which it will put in the clipboard. If you think the remedy will work well on your computer, paste it into
+your terminal. You can also try a different remedy -- `doctor` is not omnipotent. Then run `doctor` over 
+and over until it succeeds. (Note: `doctor` may not work well on Windows.)
+
+### Making changes
+
 If you have write access to this repo, this is how you add features (or fix bugs):
 
 1. In the deps section `mix.exs` in your application, change `:remote` to `:local`.
 1. Edit Euclid code locally.
+1. Run tests with `bin/dev/test`.
 1. Once you're happy with your changes, perform the traditional dance of commit, fetch and rebase.
 1. Increment the version (in `VERSION`) following [Semantic Versioning](https://semver.org/).
 1. Commit the version file and push using `bin/dev/shipit`
