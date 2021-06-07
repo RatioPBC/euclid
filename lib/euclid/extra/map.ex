@@ -10,13 +10,15 @@ defmodule Euclid.Extra.Map do
     map |> Map.new(fn {k, v} -> {Extra.Atom.from_string(k), v} end)
   end
 
-  def deep_atomize_keys(map) do
-    map
-    |> Map.new(fn
+  def deep_atomize_keys(map) when is_map(map) do
+    Map.new(map, fn
       {k, v} when is_map(v) -> {Extra.Atom.from_string(k), deep_atomize_keys(v)}
+      {k, list} when is_list(list) -> {Extra.Atom.from_string(k), Enum.map(list, fn v -> deep_atomize_keys(v) end)}
       {k, v} -> {Extra.Atom.from_string(k), v}
     end)
   end
+
+  def deep_atomize_keys(not_a_map), do: not_a_map
 
   def merge(a, b) when is_map(a) and is_map(b), do: Map.merge(a, b)
   def merge(a, b), do: Map.merge(Enum.into(a, %{}), Enum.into(b, %{}))
