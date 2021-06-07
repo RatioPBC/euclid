@@ -85,7 +85,7 @@ defmodule Euclid.Extra.String do
   end
 
   defp secure_compare(<<x, left::binary>>, <<y, right::binary>>, acc) do
-    xorred = x ^^^ y
+    xorred = Bitwise.bxor(x, y)
     secure_compare(left, right, acc ||| xorred)
   end
 
