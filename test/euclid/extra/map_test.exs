@@ -29,6 +29,12 @@ defmodule Euclid.Extra.MapTest do
       |> Extra.Map.atomize_keys()
       |> assert_eq(%{item1: 1, item2: 2})
     end
+
+    test "handles a list of maps" do
+      [%{a: :b}, %{"d" => :f}]
+      |> Extra.Map.deep_atomize_keys()
+      |> assert_eq([%{a: :b}, %{d: :f}])
+    end
   end
 
   describe "deep_atomize_keys" do
@@ -45,11 +51,13 @@ defmodule Euclid.Extra.MapTest do
     end
 
     test "handles values that are lists" do
-      %{"item1" => "chapstick", "item2" => %{"item3" => ["mask", "altoids"], "item4" => [%{"size" => "s", "color" => "blue"}, %{"size" => "m", "color" => "red"}]}}
+      %{
+        "item1" => "chapstick",
+        "item2" => %{"item3" => ["mask", "altoids"], "item4" => [%{"size" => "s", "color" => "blue"}, %{"size" => "m", "color" => "red"}]}
+      }
       |> Extra.Map.deep_atomize_keys()
-      |> assert_eq(%{item1: "chapstick", item2: %{item3: ["mask", "altoids"], item4: [%{size: "s", color: "blue"}, %{size: "m", color: "red"}] }})
+      |> assert_eq(%{item1: "chapstick", item2: %{item3: ["mask", "altoids"], item4: [%{size: "s", color: "blue"}, %{size: "m", color: "red"}]}})
     end
-
   end
 
   describe "merge" do
