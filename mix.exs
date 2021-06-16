@@ -6,9 +6,12 @@ defmodule Euclid.MixProject do
       app: :euclid,
       deps: deps(),
       description: "Shared functions for Elixir projects at Geometer",
+      docs: docs(),
       elixir: "~> 1.9",
       elixirc_options: [warnings_as_errors: true],
       elixirc_paths: elixirc_paths(Mix.env()),
+      name: "Euclid",
+      source_url: "https://github.com/geometerio/euclid",
       package: [
         files: ~w[
           lib
@@ -23,6 +26,13 @@ defmodule Euclid.MixProject do
       source_url: "https://github.com/geometerio/euclid",
       start_permanent: Mix.env() == :prod,
       version: version()
+    ]
+  end
+
+  defp docs do
+    [
+      main: "Euclid",
+      extras: ["README.md"]
     ]
   end
 
