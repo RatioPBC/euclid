@@ -156,6 +156,20 @@ defmodule Euclid.Test.Extra.AssertionsTest do
       expected_message = ~r|Expected timestamp to be recent, but was nil|
       assert_raise ExUnit.AssertionError, expected_message, fn -> assert_recent(nil) end
     end
+
+    test "with a valid ISO8601 string, converts to a DateTime" do
+      DateTime.utc_now() |> DateTime.add(-29, :second) |> DateTime.to_iso8601() |> assert_recent()
+    end
+
+    test "with an invalid ISO8601 string, blows up" do
+      expected = ~r|Expected DateTime “glorp” to be recent, but it wasn't a valid DateTime in ISO8601 format: :invalid_format|
+      assert_raise ExUnit.AssertionError, expected, fn -> "glorp" |> assert_recent() end
+
+      now = ~N[2021-01-02T03:04:05.123456]
+
+      expected = ~r|Expected DateTime “2021-01-02T03:04:05.123456” to be recent, but it wasn't a valid DateTime in ISO8601 format: :missing_offset|
+      assert_raise ExUnit.AssertionError, expected, fn -> now |> NaiveDateTime.to_iso8601() |> assert_recent() end
+    end
   end
 
   describe "assert_datetime_approximate" do

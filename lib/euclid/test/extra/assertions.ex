@@ -102,6 +102,17 @@ defmodule Euclid.Test.Extra.Assertions do
     end
   end
 
+  def assert_recent(datetime_string) when is_binary(datetime_string) do
+    case DateTime.from_iso8601(datetime_string) do
+      {:ok, datetime, 0} ->
+        assert_recent(datetime)
+
+      {:error, reason} ->
+        "Expected DateTime “#{datetime_string}” to be recent, but it wasn't a valid DateTime in ISO8601 format: #{inspect(reason)}"
+        |> flunk()
+    end
+  end
+
   @spec assert_that(any, [{:changes, any} | {:from, any} | {:to, any}, ...]) :: {:__block__, [], [...]}
   defmacro assert_that(command, changes: check, from: from, to: to) do
     quote do
