@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.4
+
+- Euclid.Test.Extra.Assertions.assert_recent accepts a DateTime as a string, in ISO8601 format
+
 ## v0.2.2
 
 - Fix deprecation warning
