@@ -75,7 +75,7 @@ defmodule Euclid.Test.Extra.AssertionsTest do
                    """
 
 
-                   Assertion with == failed
+                   Pre-condition failed
                    code:  assert Agent.get(agent, fn s -> s end) == 9
                    left:  0
                    right: 9
@@ -96,7 +96,7 @@ defmodule Euclid.Test.Extra.AssertionsTest do
                    """
 
 
-                   Assertion with == failed
+                   Post-condition failed
                    code:  assert Agent.get(agent, fn s -> s end) == 2
                    left:  1
                    right: 2

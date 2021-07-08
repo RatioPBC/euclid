@@ -116,9 +116,21 @@ defmodule Euclid.Test.Extra.Assertions do
   @spec assert_that(any, [{:changes, any} | {:from, any} | {:to, any}, ...]) :: {:__block__, [], [...]}
   defmacro assert_that(command, changes: check, from: from, to: to) do
     quote do
-      assert unquote(check) == unquote(from)
+      try do
+        assert unquote(check) == unquote(from)
+      rescue
+        error in ExUnit.AssertionError ->
+          raise %{error | message: "Pre-condition failed"}
+      end
+
       unquote(command)
-      assert unquote(check) == unquote(to)
+
+      try do
+        assert unquote(check) == unquote(to)
+      rescue
+        error in ExUnit.AssertionError ->
+          raise %{error | message: "Post-condition failed"}
+      end
     end
   end
 end
