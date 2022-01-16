@@ -21,11 +21,9 @@ defmodule Euclid.Assertions do
 
   def assert_eq(left, right, opts) when is_list(left) and is_list(right) do
     {left, right} =
-      if Keyword.get(opts, :ignore_order, false) do
-        {Enum.sort(left), Enum.sort(right)}
-      else
-        {left, right}
-      end
+      if Keyword.get(opts, :ignore_order, false),
+        do: {Enum.sort(left), Enum.sort(right)},
+        else: {left, right}
 
     assert left == right
     returning(opts, left)
