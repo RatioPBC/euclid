@@ -1,4 +1,4 @@
-defmodule Euclid.Test.Extra.AssertionsTest do
+defmodule Euclid.AssertionsTest do
   use Euclid.SimpleCase, async: true
 
   describe "assert_eq" do

@@ -1,7 +1,5 @@
-defmodule Euclid.Extra.DateTimeTest do
+defmodule Euclid.DateTimeTest do
   use Euclid.SimpleCase, async: true
-
-  alias Euclid.Extra
 
   describe "to_iso8601" do
     test "formats with no partial seconds" do
@@ -19,7 +17,7 @@ defmodule Euclid.Extra.DateTimeTest do
         time_zone: "America/Manaus"
       }
 
-      assert date |> Extra.DateTime.to_iso8601(:rounded) == "2000-02-29T23:00:07-04:00"
+      assert date |> Euclid.DateTime.to_iso8601(:rounded) == "2000-02-29T23:00:07-04:00"
     end
   end
 end

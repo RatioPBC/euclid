@@ -3,7 +3,7 @@ defmodule Euclid.SimpleCase do
 
   using do
     quote do
-      import Euclid.Test.Extra.Assertions
+      import Euclid.Assertions
       import ExUnit.Assertions
 
       alias Euclid.Test

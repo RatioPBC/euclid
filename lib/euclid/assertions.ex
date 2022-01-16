@@ -1,8 +1,6 @@
-defmodule Euclid.Test.Extra.Assertions do
-  @moduledoc deprecated: "Use `Euclid.Assertions` instead"
+defmodule Euclid.Assertions do
   import ExUnit.Assertions
 
-  @deprecated "Use `Euclid.Assertions.assert_date_approximate/3` instead"
   def assert_datetime_approximate(left, right, delta \\ 1) do
     cond do
       NaiveDateTime.compare(right, NaiveDateTime.add(left, -delta, :second)) == :lt ->
@@ -18,7 +16,6 @@ defmodule Euclid.Test.Extra.Assertions do
     end
   end
 
-  @deprecated "Use `Euclid.Assertions.assert_eq/3` instead"
   @spec assert_eq(any, any, keyword) :: any
   def assert_eq(left, right, opts \\ [])
 
@@ -65,7 +62,6 @@ defmodule Euclid.Test.Extra.Assertions do
   defp filter_map(left, right, keys, :none) when is_list(keys), do: {Map.take(left, keys), Map.take(right, keys)}
   defp filter_map(left, right, :all, keys) when is_list(keys), do: {Map.drop(left, keys), Map.drop(right, keys)}
 
-  @deprecated "Use `Euclid.Assertions.assert_recent/1` instead"
   def assert_recent(nil) do
     flunk("Expected timestamp to be recent, but was nil")
   end
@@ -118,7 +114,6 @@ defmodule Euclid.Test.Extra.Assertions do
   end
 
   @spec assert_that(any, [{:changes, any} | {:from, any} | {:to, any}, ...]) :: {:__block__, [], [...]}
-  @deprecated "Use `Euclid.Assertions.assert_that/3` instead"
   defmacro assert_that(command, changes: check, from: from, to: to) do
     quote do
       try do

@@ -16,8 +16,14 @@ to mention the source either.
 Add to `mix.exs`:
 
 ```elixir
-{:euclid, "~> 0.2"}
+{:euclid, "~> 0.2.5"}
 ```
+
+## Upgrading
+
+As of version `0.2.5`, the `Euclid.Extra.*` and `Euclid.Test.Extra.*` modules are deprecated.
+Use the modules in `Euclid` instead (for example, `Euclid.String` instead of the deprecated `Euclid.Extra.String`).
+`Euclid.Extra.*` and `Euclid.Test.Extra.*` will be removed in the upcoming `1.0` release.
 
 ## Development
 
