@@ -1,6 +1,9 @@
 defmodule Euclid.Assertions do
   import ExUnit.Assertions
 
+  @type assert_eq_opts() :: [returning: any()]
+
+  @deprecated "Use `assert_eq(left, right, within: {delta, unit})` instead"
   def assert_datetime_approximate(left, right, delta \\ 1) do
     cond do
       NaiveDateTime.compare(right, NaiveDateTime.add(left, -delta, :second)) == :lt ->
@@ -16,7 +19,19 @@ defmodule Euclid.Assertions do
     end
   end
 
-  @spec assert_eq(any, any, keyword) :: any
+  @doc """
+  Asserts that the `left` and `right` values are equal. Returns the `left` value unless the assertion fails,
+  or if the `:returning` option is used. Uses `assert left == right` under the hood, but works nicely in a pipeline.
+
+  Options:
+
+  * `ignore_order: boolean` - if the `left` and `right` values are lists, ignores the order when checking equality.
+  * `returning: value` - returns `value` if the assertion passes, rather than returning the `left` value.
+  * `within: delta` - asserts that the `left` and `right` values are within `delta` of each other rather than strictly equal.
+  * `within: {delta, time_unit}` - like `within: delta` but performs time comparisons in the specified `time_unit`.
+        If `left` and `right` are strings, they are parsed as ISO8601 dates.
+  """
+  @spec assert_eq(left :: any(), right :: any(), opts :: assert_eq_opts()) :: any()
   def assert_eq(left, right, opts \\ [])
 
   def assert_eq(left, right, opts) when is_list(left) and is_list(right) do
@@ -41,15 +56,30 @@ defmodule Euclid.Assertions do
     returning(opts, string)
   end
 
-  def assert_eq(left, right, opts) when is_map(left) and is_map(right) do
-    {filtered_left, filtered_right} = filter_map(left, right, Keyword.get(opts, :only, :all), Keyword.get(opts, :except, :none))
-    assert filtered_left == filtered_right
+  def assert_eq(left, right, opts) do
+    cond do
+      Keyword.has_key?(opts, :within) ->
+        assert_within(left, right, Keyword.get(opts, :within))
+
+      is_map(left) and is_map(right) ->
+        {filtered_left, filtered_right} = filter_map(left, right, Keyword.get(opts, :only, :all), Keyword.get(opts, :except, :none))
+        assert filtered_left == filtered_right
+
+      true ->
+        assert left == right
+    end
+
     returning(opts, left)
   end
 
-  def assert_eq(left, right, opts) do
-    assert left == right
-    returning(opts, left)
+  defp assert_within(left, right, {delta, unit}) do
+    assert abs(Euclid.Difference.diff(left, right)) <= Euclid.Duration.convert({delta, unit}, :microsecond),
+           ~s|Expected "#{left}" to be within #{Euclid.Duration.to_string({delta, unit})} of "#{right}"|
+  end
+
+  defp assert_within(left, right, delta) do
+    assert abs(Euclid.Difference.diff(left, right)) <= delta,
+           ~s|Expected "#{left}" to be within #{delta} of "#{right}"|
   end
 
   defp returning(opts, default) when is_list(opts),

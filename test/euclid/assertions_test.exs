@@ -10,6 +10,14 @@ defmodule Euclid.AssertionsTest do
       assert assert_eq("arg", "arg", returning: "something else") == "something else"
     end
 
+    test "when the `within` option is given, equality does not have to be exact" do
+      assert_eq 1.1, 1.08, within: 0.1
+
+      assert_raise ExUnit.AssertionError,
+                   ~s|\n\nExpected "1.1" to be within 0.01 of "1.08"\n|,
+                   fn -> assert_eq 1.1, 1.08, within: 0.01 end
+    end
+
     test "when the arguments are maps, and no options are given, performs a regular map equality test" do
       assert_eq %{a: 1, b: 2}, %{b: 2, a: 1}
       assert_raise ExUnit.AssertionError, fn -> assert_eq %{a: 9, b: 9}, %{b: 2, a: 1} end
@@ -59,6 +67,21 @@ defmodule Euclid.AssertionsTest do
     test "when the arguments are DateTimes" do
       assert_eq ~U[2020-01-01T00:00:00Z], ~U[2020-01-01T00:00:00Z]
       assert_raise ExUnit.AssertionError, fn -> assert_eq ~U[2020-01-01T00:00:00Z], ~U[2020-01-02T00:00:00Z] end
+    end
+
+    test "when the arguments are DateTimes, and the `within: {delta, unit}` option is given, it succeeds when the datetimes are within the delta" do
+      assert_eq ~U[2020-01-01T00:00:00Z], ~U[2020-01-01T00:01:59Z], within: {2, :minute}
+      assert_raise ExUnit.AssertionError, fn -> assert_eq ~U[2020-01-01T00:00:00Z], ~U[2020-01-02T00:02:01Z], within: {2, :minute} end
+    end
+
+    test "when the arguments are NaiveDateTimes, and the `within: {delta, unit}` option is given, it succeeds when the datetimes are within the delta" do
+      assert_eq ~N[2020-01-01T00:00:00Z], ~N[2020-01-01T00:01:59Z], within: {2, :minute}
+      assert_raise ExUnit.AssertionError, fn -> assert_eq ~N[2020-01-01T00:00:00Z], ~N[2020-01-02T00:02:01Z], within: {2, :minute} end
+    end
+
+    test "when the arguments are strings, and the `within: {delta, unit}` option is given, it converts from ISO8601 and succeeds when the datetimes are within the delta" do
+      assert_eq "2020-01-01T00:00:00Z", "2020-01-01T00:01:59Z", within: {2, :minute}
+      assert_raise ExUnit.AssertionError, fn -> assert_eq "2020-01-01T00:00:00Z", "2020-01-02T00:02:01Z", within: {2, :minute} end
     end
   end
 
@@ -174,63 +197,6 @@ defmodule Euclid.AssertionsTest do
 
       expected = ~r|Expected DateTime “2021-01-02T03:04:05.123456” to be recent, but it wasn't a valid DateTime in ISO8601 format: :missing_offset|
       assert_raise ExUnit.AssertionError, expected, fn -> now |> NaiveDateTime.to_iso8601() |> assert_recent() end
-    end
-  end
-
-  describe "assert_datetime_approximate" do
-    setup do
-      datetime = ~U[2020-01-01 12:00:00Z]
-      %{datetime: datetime}
-    end
-
-    test "passes when datetimes are within one second of each other by default", %{datetime: datetime} do
-      assert_datetime_approximate(datetime, datetime)
-
-      one_second_later = DateTime.add(datetime, 1, :second)
-      assert_datetime_approximate(datetime, one_second_later)
-
-      one_second_earlier = DateTime.add(datetime, -1, :second)
-      assert_datetime_approximate(datetime, one_second_earlier)
-    end
-
-    test "flunks when datetime are >= one second apart by default", %{datetime: datetime} do
-      one_second_later = DateTime.add(datetime, 2, :second)
-
-      assert_raise ExUnit.AssertionError, "\n\nExpected 2020-01-01 12:00:02Z to be within 1 seconds of 2020-01-01 12:00:00Z\n", fn ->
-        assert_datetime_approximate(datetime, one_second_later)
-      end
-
-      one_second_earlier = DateTime.add(datetime, -2, :second)
-
-      assert_raise ExUnit.AssertionError, "\n\nExpected 2020-01-01 11:59:58Z to be within 1 seconds of 2020-01-01 12:00:00Z\n", fn ->
-        assert_datetime_approximate(datetime, one_second_earlier)
-      end
-    end
-
-    test "passes when datetimes are within provided delta", %{datetime: datetime} do
-      five_seconds_later = DateTime.add(datetime, 5, :second)
-      assert_datetime_approximate(datetime, five_seconds_later, 5)
-
-      five_seconds_earlier = DateTime.add(datetime, -5, :second)
-      assert_datetime_approximate(datetime, five_seconds_earlier, 5)
-    end
-
-    test "flunks when datetimes are outside provided delta", %{datetime: datetime} do
-      six_seconds_later = DateTime.add(datetime, 6, :second)
-
-      assert_raise ExUnit.AssertionError, "\n\nExpected 2020-01-01 12:00:06Z to be within 5 seconds of 2020-01-01 12:00:00Z\n", fn ->
-        assert_datetime_approximate(datetime, six_seconds_later, 5)
-      end
-
-      six_seconds_earlier = DateTime.add(datetime, -6, :second)
-
-      assert_raise ExUnit.AssertionError, "\n\nExpected 2020-01-01 11:59:54Z to be within 5 seconds of 2020-01-01 12:00:00Z\n", fn ->
-        assert_datetime_approximate(datetime, six_seconds_earlier, 5)
-      end
-    end
-
-    test "returns first argument if valid", %{datetime: datetime} do
-      assert assert_datetime_approximate(datetime, datetime) == datetime
     end
   end
 end
