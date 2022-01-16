@@ -62,9 +62,8 @@ defmodule Euclid.Assertions do
   defp filter_map(left, right, keys, :none) when is_list(keys), do: {Map.take(left, keys), Map.take(right, keys)}
   defp filter_map(left, right, :all, keys) when is_list(keys), do: {Map.drop(left, keys), Map.drop(right, keys)}
 
-  def assert_recent(nil) do
-    flunk("Expected timestamp to be recent, but was nil")
-  end
+  def assert_recent(nil),
+    do: flunk("Expected timestamp to be recent, but was nil")
 
   def assert_recent(%NaiveDateTime{} = timestamp) do
     timestamp = timestamp |> NaiveDateTime.truncate(:second)

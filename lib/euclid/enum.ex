@@ -1,10 +1,8 @@
 defmodule Euclid.Enum do
   def at!(enum, index) do
-    if length(enum) < index + 1 do
-      raise "Out of range: index #{index} of enum with length #{length(enum)}: #{inspect(enum)}"
-    else
-      Enum.at(enum, index)
-    end
+    if length(enum) < index + 1,
+      do: raise("Out of range: index #{index} of enum with length #{length(enum)}: #{inspect(enum)}"),
+      else: Enum.at(enum, index)
   end
 
   def compact(enum),
@@ -40,9 +38,8 @@ defmodule Euclid.Enum do
   def tids(enumerable),
     do: enumerable |> Enum.map(& &1.tid)
 
-  def update_or_append_by([] = enumerable, _filter, mergeable) do
-    enumerable ++ [mergeable]
-  end
+  def update_or_append_by([] = enumerable, _filter, mergeable),
+    do: enumerable ++ [mergeable]
 
   def update_or_append_by([%{} | _] = enumerable, filter, mergeable) do
     enumerable
