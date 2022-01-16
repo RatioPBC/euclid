@@ -1,5 +1,6 @@
 defmodule Euclid.SugarTest do
   use ExUnit.Case, async: true
+  doctest Euclid.Sugar
 
   describe "error" do
     test "wraps the given term in an :error tuple" do

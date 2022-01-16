@@ -2,12 +2,12 @@ defmodule Euclid.Sugar do
   @moduledoc "Some common syntactic sugar functions, probably best used by importing the whole module"
 
   @doc """
-  Wraps a term in an :error tuple
+  Wraps a term in an :error tuple. Useful in pipelines.
 
   ## Examples
 
-      socket |> assign(name: "alice") |> error()
-
+      iex> %{} |> Map.put(:count, "unknown") |> Euclid.Sugar.error()
+      {:error, %{count: "unknown"}}
   """
   @spec error(term()) :: {:error, term()}
   def error(term), do: {:error, term}
@@ -17,8 +17,8 @@ defmodule Euclid.Sugar do
 
   ## Examples
 
-      socket |> assign(name: "alice") |> noreply()
-
+      iex> %{} |> Map.put(:count, 0) |> Euclid.Sugar.noreply()
+      {:noreply, %{count: 0}}
   """
   @spec noreply(term()) :: {:noreply, term()}
   def noreply(term), do: {:noreply, term}
@@ -28,8 +28,8 @@ defmodule Euclid.Sugar do
 
   ## Examples
 
-      socket |> assign(name: "alice") |> ok()
-
+      iex> %{} |> Map.put(:count, 10) |> Euclid.Sugar.ok()
+      {:ok, %{count: 10}}
   """
   @spec ok(term()) :: {:ok, term()}
   def ok(term), do: {:ok, term}
@@ -42,11 +42,8 @@ defmodule Euclid.Sugar do
 
   ## Examples
 
-      "/tmp/hello.txt"
-      |> File.open()!
-      |> File.write("hello")
-      |> returning(:written)
-
+      iex> %{} |> Map.put(:count, 20) |> Euclid.Sugar.returning(:count_updated)
+      :count_updated
   """
   @spec returning(any(), any()) :: any()
   def returning(_first, second), do: second
