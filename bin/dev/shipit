@@ -7,4 +7,5 @@ bin/dev/update
 bin/dev/test
 step "Auditing" "mix deps.audit"
 step "Credo" "mix credo"
+step "Dialyzer" "mix dialyzer"
 step "Pushing" "git push origin HEAD"

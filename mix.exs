@@ -6,6 +6,9 @@ defmodule Euclid.MixProject do
       app: :euclid,
       deps: deps(),
       description: "Shared functions for Elixir projects at Geometer",
+      dialyzer: [
+        plt_add_apps: [:ex_unit]
+      ],
       docs: docs(),
       elixir: "~> 1.9",
       elixirc_options: [warnings_as_errors: true],
@@ -54,6 +57,7 @@ defmodule Euclid.MixProject do
   defp deps do
     [
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.24.0", only: :dev, runtime: false},
       {:mix_audit, "~> 0.1", only: [:dev, :test], runtime: false}
     ]
