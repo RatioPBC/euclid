@@ -1,4 +1,6 @@
 defmodule Euclid.SimpleCase do
+  @moduledoc "A basic test case"
+
   use ExUnit.CaseTemplate
 
   using do

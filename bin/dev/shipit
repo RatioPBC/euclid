@@ -6,4 +6,5 @@ source "bin/_support/step.sh"
 bin/dev/update
 bin/dev/test
 step "Auditing" "mix deps.audit"
+step "Credo" "mix credo"
 step "Pushing" "git push origin HEAD"

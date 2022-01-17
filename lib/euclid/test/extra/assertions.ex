@@ -1,5 +1,8 @@
 defmodule Euclid.Test.Extra.Assertions do
   @moduledoc deprecated: "Use `Euclid.Assertions` instead"
+
+  # credo:disable-for-this-file
+
   import ExUnit.Assertions
 
   @deprecated "Use `Euclid.Assertions.assert_date_approximate/3` instead"

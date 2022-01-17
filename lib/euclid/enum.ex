@@ -1,4 +1,6 @@
 defmodule Euclid.Enum do
+  @moduledoc "Enum-related functions"
+
   def at!(enum, index) do
     if length(enum) < index + 1,
       do: raise("Out of range: index #{index} of enum with length #{length(enum)}: #{inspect(enum)}"),

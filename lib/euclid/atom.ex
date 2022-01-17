@@ -1,4 +1,6 @@
 defmodule Euclid.Atom do
+  @moduledoc "Atom-related functions"
+
   def from_string(nil), do: raise(ArgumentError, message: "Unable to convert nil into an atom")
   def from_string(s) when is_binary(s), do: String.to_atom(s)
   def from_string(a) when is_atom(a), do: a

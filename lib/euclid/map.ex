@@ -1,4 +1,6 @@
 defmodule Euclid.Map do
+  @moduledoc "Map-related functions"
+
   def all_values_blank?(map),
     do: map |> Map.values() |> Enum.all?(&Euclid.Exists.blank?/1)
 

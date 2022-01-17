@@ -1,6 +1,16 @@
 defmodule Euclid.RandomTest do
   use Euclid.SimpleCase, async: true
 
+  describe "integer" do
+    test "generates random integers" do
+      0..10_000
+      |> Enum.map(fn _ -> Euclid.Random.integer(10) end)
+      |> Enum.uniq()
+      |> Enum.sort()
+      |> assert_eq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    end
+  end
+
   describe "string" do
     test "defaults to 32 characters" do
       assert String.length(Euclid.Random.string()) == 32

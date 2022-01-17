@@ -1,6 +1,8 @@
 defmodule Euclid.Extra.String do
   @moduledoc deprecated: "Use `Euclid.String` instead"
 
+  use Bitwise
+
   alias Euclid.Exists
 
   @deprecated "Use `Euclid.String.dasherize/1` instead"
@@ -82,8 +84,6 @@ defmodule Euclid.Extra.String do
       |> String.replace(~r{[^a-z0-9]+}i, "_")
       |> String.trim_leading("_")
       |> String.trim_trailing("_")
-
-  use Bitwise
 
   @doc """
   Compares the two binaries in constant-time to avoid timing attacks.

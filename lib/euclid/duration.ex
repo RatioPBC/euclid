@@ -1,4 +1,9 @@
 defmodule Euclid.Duration do
+  @moduledoc """
+  A duration is a {time, unit} tuple, where the time is a number and the unit is one of:
+  `:nanosecond`, `:microsecond`, `:millisecond`, `:second`, `:minute`, `:hour`, `:day`
+  """
+
   @seconds_per_minute 60
   @seconds_per_hour 60 * 60
   @seconds_per_day 60 * 60 * 24

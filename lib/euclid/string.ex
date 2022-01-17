@@ -1,4 +1,8 @@
 defmodule Euclid.String do
+  @moduledoc "String-related functions"
+
+  use Bitwise
+
   alias Euclid.Exists
 
   def dasherize(atom) when is_atom(atom),
@@ -26,6 +30,25 @@ defmodule Euclid.String do
         "#{String.slice(s, 0, left_length)}…#{String.slice(s, -right_length, right_length)}"
     end
   end
+
+  @doc """
+  Compares the two binaries in constant-time to avoid timing attacks.
+  See: http://codahale.com/a-lesson-in-timing-attacks/
+  """
+  def secure_compare(left, right) when is_nil(left) or is_nil(right),
+    do: false
+
+  @spec secure_compare(binary(), binary()) :: boolean()
+  def secure_compare(left, right) when is_binary(left) and is_binary(right),
+    do: byte_size(left) == byte_size(right) and secure_compare(left, right, 0)
+
+  defp secure_compare(<<x, left::binary>>, <<y, right::binary>>, acc) do
+    xorred = Bitwise.bxor(x, y)
+    secure_compare(left, right, acc ||| xorred)
+  end
+
+  defp secure_compare(<<>>, <<>>, acc),
+    do: acc === 0
 
   def squish(nil),
     do: nil
@@ -85,26 +108,4 @@ defmodule Euclid.String do
     |> String.trim_leading("_")
     |> String.trim_trailing("_")
   end
-
-  use Bitwise
-
-  @doc """
-  Compares the two binaries in constant-time to avoid timing attacks.
-  See: http://codahale.com/a-lesson-in-timing-attacks/
-  """
-
-  def secure_compare(left, right) when is_nil(left) or is_nil(right),
-    do: false
-
-  @spec secure_compare(binary(), binary()) :: boolean()
-  def secure_compare(left, right) when is_binary(left) and is_binary(right),
-    do: byte_size(left) == byte_size(right) and secure_compare(left, right, 0)
-
-  defp secure_compare(<<x, left::binary>>, <<y, right::binary>>, acc) do
-    xorred = Bitwise.bxor(x, y)
-    secure_compare(left, right, acc ||| xorred)
-  end
-
-  defp secure_compare(<<>>, <<>>, acc),
-    do: acc === 0
 end

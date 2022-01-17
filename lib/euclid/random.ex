@@ -1,8 +1,14 @@
 defmodule Euclid.Random do
-  @type encoding() :: :base32 | :base64
   @moduledoc """
   Generate random data.
   """
+
+  @type encoding() :: :base32 | :base64
+
+  @doc "Returns a random integer between `0` and `max`"
+  @spec integer(max :: pos_integer()) :: pos_integer()
+  def integer(max \\ 1_000_000_000),
+    do: 0..max |> Enum.random()
 
   @doc """
   Returns a base64- or base32-encoded random string of 32 characters.

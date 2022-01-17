@@ -1,4 +1,6 @@
 defmodule Euclid.Exists do
+  @moduledoc "Functions related to terms being blank or not"
+
   def any?(enum) when is_list(enum) or is_map(enum), do: enum |> Enum.any?(&present?/1)
 
   def blank?(nil), do: true

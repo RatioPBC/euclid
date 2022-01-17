@@ -1,4 +1,6 @@
 defmodule Euclid.List do
+  @moduledoc "List-related functions"
+
   def compact(list) when is_list(list), do: list |> Euclid.Enum.compact()
 
   def first(list, default \\ nil)

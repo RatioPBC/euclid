@@ -1,4 +1,6 @@
 defmodule Euclid.Assertions do
+  @moduledoc "Some ExUnit assertions"
+
   import ExUnit.Assertions
 
   @type assert_eq_opts() :: [returning: any()]
@@ -147,7 +149,7 @@ defmodule Euclid.Assertions do
         assert unquote(check) == unquote(from)
       rescue
         error in ExUnit.AssertionError ->
-          raise %{error | message: "Pre-condition failed"}
+          reraise %{error | message: "Pre-condition failed"}, __STACKTRACE__
       end
 
       unquote(command)
@@ -156,7 +158,7 @@ defmodule Euclid.Assertions do
         assert unquote(check) == unquote(to)
       rescue
         error in ExUnit.AssertionError ->
-          raise %{error | message: "Post-condition failed"}
+          reraise %{error | message: "Post-condition failed"}, __STACKTRACE__
       end
     end
   end
