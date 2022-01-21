@@ -16,6 +16,7 @@ Deprecated modules and functions will be removed in the `1.0` release.
   subtraction with `Kernel.-/2`, and also includes implementations for `DateTime`, `NaiveDateTime`, and `BitString` (strings).
 - Added `Euclid.Duration` which is a `{time, unit}` tuple (for example, `{200, :millisecond}`). 
   It has `convert/2` and `to_string/1` functions.
+- Added `Euclid.Sugar` which has some handy functions meant to be imported.
 - `Euclid.Random.string` now supports base32 encoding. The default is still base64. 
   Base32 is useful for file names since it only contains letters and numbers.
 - `Euclid.Assertions.assert_eq` now supports `:within` option. It uses `Euclid.Difference` to determine whether the two

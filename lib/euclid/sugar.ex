@@ -13,6 +13,17 @@ defmodule Euclid.Sugar do
   def error(term), do: {:error, term}
 
   @doc """
+  Unwraps an :error tuple, raising if the term is not an :error tuple
+
+  ## Examples
+
+      iex> {:error, 1} |> Euclid.Sugar.error!()
+      1
+  """
+  @spec error!({:error, term()}) :: term()
+  def error!({:error, term}), do: term
+
+  @doc """
   Wraps a term in a :noreply tuple
 
   ## Examples
@@ -33,6 +44,17 @@ defmodule Euclid.Sugar do
   """
   @spec ok(term()) :: {:ok, term()}
   def ok(term), do: {:ok, term}
+
+  @doc """
+  Unwraps an :ok tuple, raising if the term is not an :ok tuple
+
+  ## Examples
+
+      iex> {:ok, 1} |> Euclid.Sugar.ok!()
+      1
+  """
+  @spec ok!({:ok, term()}) :: term()
+  def ok!({:ok, term}), do: term
 
   @doc """
   Accepts two arguments and returns the second. Useful at the end of the pipeline when you
