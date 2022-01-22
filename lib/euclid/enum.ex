@@ -1,6 +1,9 @@
 defmodule Euclid.Enum do
   @moduledoc "Enum-related functions"
 
+  def any_present?(enum),
+    do: enum |> Enum.any?(&Euclid.Term.present?/1)
+
   def at!(enum, index) do
     if length(enum) < index + 1,
       do: raise("Out of range: index #{index} of enum with length #{length(enum)}: #{inspect(enum)}"),
@@ -16,6 +19,9 @@ defmodule Euclid.Enum do
     end
   end
 
+  def filter_present(values),
+    do: Enum.filter(values, &Euclid.Term.present?/1)
+
   def find_indices(enum, values) do
     for value <- values do
       Enum.find_index(enum, &(value == &1))
@@ -24,6 +30,9 @@ defmodule Euclid.Enum do
 
   def first!(enum),
     do: Enum.at(enum, 0) || raise("Expected enumerable to have at least one item")
+
+  def join_present(values, separator \\ " "),
+    do: values |> filter_present() |> Enum.join(separator)
 
   def isort(enum),
     do: enum |> isort_by(&to_string/1)

@@ -3,8 +3,6 @@ defmodule Euclid.Extra.String do
 
   use Bitwise
 
-  alias Euclid.Exists
-
   @deprecated "Use `Euclid.String.dasherize/1` instead"
   def dasherize(atom) when is_atom(atom), do: atom |> Atom.to_string() |> dasherize()
 
@@ -52,7 +50,7 @@ defmodule Euclid.Extra.String do
   def to_integer(s, :lenient) when is_binary(s),
     do: s |> String.replace(~r|\D|, "") |> Elixir.String.to_integer()
 
-  def to_integer(s, default: default), do: s |> to_integer() |> Exists.or_default(default)
+  def to_integer(s, default: default), do: s |> to_integer() |> Euclid.Term.or_default(default)
 
   @deprecated "Use `Euclid.String.trim/1` instead"
   def trim(nil), do: nil

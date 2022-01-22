@@ -1,11 +1,27 @@
 defmodule Euclid.EnumTest do
   use Euclid.SimpleCase, async: true
 
+  describe "any_present?" do
+    test "is true if any items are present" do
+      assert Euclid.Enum.any_present?([nil, "", " ", 43])
+    end
+
+    test "is false if no items are present" do
+      refute Euclid.Enum.any_present?([nil, "", " ", false])
+    end
+  end
+
   describe "fetch_multiple" do
     test "fetches from multiple indices" do
       ~w{zero one two three four five}
       |> Euclid.Enum.fetch_multiple([1, 3, 5])
       |> assert_eq(~w{one three five})
+    end
+  end
+
+  describe "filter_present" do
+    test "filters in present values" do
+      assert Euclid.Enum.filter_present([nil, "not nil", [], %{}]) == ["not nil"]
     end
   end
 
@@ -42,6 +58,13 @@ defmodule Euclid.EnumTest do
     test "sorts by the mapper case-insensitively" do
       Euclid.Enum.isort_by([%{name: "Banana"}, %{name: "apple"}, %{name: "cherry"}], & &1.name)
       |> assert_eq([%{name: "apple"}, %{name: "Banana"}, %{name: "cherry"}])
+    end
+  end
+
+  describe "join" do
+    test "joins present items" do
+      assert Euclid.Enum.join_present(["ant", "", "bat", nil, "cow"]) == "ant bat cow"
+      assert Euclid.Enum.join_present(["ant", "", "bat", nil, "cow"], "-") == "ant-bat-cow"
     end
   end
 

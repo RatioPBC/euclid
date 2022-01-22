@@ -14,6 +14,16 @@ defmodule Euclid.ListTest do
     test "when no default is provided", do: [] |> Euclid.List.first() |> assert_eq(nil)
   end
 
+  describe "first_present" do
+    test "returns the first item in the list that is not blank" do
+      assert Euclid.List.first_present([nil, "", [], %{}, "x", "y"]) == "x"
+    end
+
+    test "returns nil if everything is blank" do
+      assert Euclid.List.first_present([nil, "", []]) == nil
+    end
+  end
+
   describe "only!" do
     test "returns the only item in the list" do
       assert Euclid.List.only!([1]) == 1

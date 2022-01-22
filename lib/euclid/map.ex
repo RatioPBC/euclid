@@ -2,7 +2,7 @@ defmodule Euclid.Map do
   @moduledoc "Map-related functions"
 
   def all_values_blank?(map),
-    do: map |> Map.values() |> Enum.all?(&Euclid.Exists.blank?/1)
+    do: map |> Map.values() |> Enum.all?(&Euclid.Term.blank?/1)
 
   def atomize_keys(map),
     do: map |> Map.new(fn {k, v} -> {Euclid.Atom.from_string(k), v} end)

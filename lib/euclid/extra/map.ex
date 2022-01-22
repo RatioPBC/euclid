@@ -1,11 +1,9 @@
 defmodule Euclid.Extra.Map do
   @moduledoc deprecated: "Use `Euclid.Map` instead"
 
-  alias Euclid.Exists
-
   @deprecated "Use `Euclid.Map.all_values_blank?/1` instead"
   def all_values_blank?(map) do
-    map |> Map.values() |> Enum.all?(&Exists.blank?/1)
+    map |> Map.values() |> Enum.all?(&Euclid.Term.blank?/1)
   end
 
   @deprecated "Use `Euclid.Map.atomize_keys/1` instead"
