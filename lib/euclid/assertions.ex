@@ -31,7 +31,7 @@ defmodule Euclid.Assertions do
   * `returning: value` - returns `value` if the assertion passes, rather than returning the `left` value.
   * `within: delta` - asserts that the `left` and `right` values are within `delta` of each other rather than strictly equal.
   * `within: {delta, time_unit}` - like `within: delta` but performs time comparisons in the specified `time_unit`.
-        If `left` and `right` are strings, they are parsed as ISO8601 dates.
+    If `left` and `right` are strings, they are parsed as ISO8601 dates.
   """
   @spec assert_eq(left :: any(), right :: any(), opts :: assert_eq_opts()) :: any()
   def assert_eq(left, right, opts \\ [])
@@ -92,6 +92,7 @@ defmodule Euclid.Assertions do
   defp filter_map(left, right, keys, :none) when is_list(keys), do: {Map.take(left, keys), Map.take(right, keys)}
   defp filter_map(left, right, :all, keys) when is_list(keys), do: {Map.drop(left, keys), Map.drop(right, keys)}
 
+  @doc "Asserts that a `NaiveDateTime` or `DateTime` is no more than 30 seconds ago."
   def assert_recent(nil),
     do: flunk("Expected timestamp to be recent, but was nil")
 
@@ -142,6 +143,21 @@ defmodule Euclid.Assertions do
     end
   end
 
+  @doc """
+  Asserts a pre-condition and a post-condition are true after performing an action.
+
+  ## Examples
+
+  ```
+  {:ok, agent} = Agent.start(fn -> 0 end)
+
+  assert_that(Agent.update(agent, fn s -> s + 1 end),
+    changes: Agent.get(agent, fn s -> s end),
+    from: 0,
+    to: 1
+  )
+  ```
+  """
   @spec assert_that(any, [{:changes, any} | {:from, any} | {:to, any}, ...]) :: {:__block__, [], [...]}
   defmacro assert_that(command, changes: check, from: from, to: to) do
     quote do

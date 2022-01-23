@@ -1,5 +1,17 @@
 defmodule Euclid.Sugar do
-  @moduledoc "Some common syntactic sugar functions, probably best used by importing the whole module"
+  @moduledoc """
+  Some common syntactic sugar functions.
+
+  These functions are intended to be used by importing the functions or the whole module:
+
+  ```
+  import Euclid.Sugar, only: [noreply: 1]
+
+  def handle_event("foo", _params, socket) do
+    socket |> assign(foo: "bar") |> noreply()
+  end
+  ```
+  """
 
   @doc """
   Wraps a term in an :error tuple. Useful in pipelines.

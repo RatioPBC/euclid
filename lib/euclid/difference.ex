@@ -1,5 +1,11 @@
 defprotocol Euclid.Difference do
   @fallback_to_any true
+
+  @doc """
+  Returns the difference between `a` and `b`.
+  The fallback implementation uses `Kernel.-/2` to subtract `b` from `a`.
+  """
+  @spec diff(any(), any()) :: any()
   def diff(a, b)
 end
 

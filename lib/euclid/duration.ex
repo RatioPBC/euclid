@@ -1,6 +1,6 @@
 defmodule Euclid.Duration do
   @moduledoc """
-  A duration is a {time, unit} tuple, where the time is a number and the unit is one of:
+  A duration is a `{time, unit}` tuple, where the time is a number and the unit is one of:
   `:nanosecond`, `:microsecond`, `:millisecond`, `:second`, `:minute`, `:hour`, `:day`
   """
 
@@ -12,7 +12,7 @@ defmodule Euclid.Duration do
   @type time_unit() :: :nanosecond | :microsecond | :millisecond | :second | :minute | :hour | :day
 
   @doc """
-  Converts a {duration, time_unit} tuple into a numeric duration. Rounds down to the nearest whole number.
+  Converts a `{duration, time_unit}` tuple into a numeric duration. Rounds down to the nearest whole number.
   Uses `System.convert_time_unit/3` under the hood; see its documentation for more details.
 
   ## Examples
@@ -30,7 +30,7 @@ defmodule Euclid.Duration do
   def convert({time, from_unit} = _duration, to_unit), do: System.convert_time_unit(time, from_unit, to_unit)
 
   @doc """
-  Converts a {duration, time_unit} tuple into a string.
+  Converts a `{duration, time_unit}` tuple into a string.
 
   ## Examples
 

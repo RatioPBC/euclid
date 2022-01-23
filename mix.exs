@@ -58,8 +58,8 @@ defmodule Euclid.MixProject do
     [
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:ex_doc, "~> 0.24.0", only: :dev, runtime: false},
-      {:mix_audit, "~> 0.1", only: [:dev, :test], runtime: false}
+      {:ex_doc, "~> 0.24", only: :dev, runtime: false},
+      {:mix_audit, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end
 

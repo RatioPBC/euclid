@@ -1,6 +1,6 @@
 # Euclid — Tools for Geometers
 
-_Euclid_ is a grab-bag of code that we use and reuse in Elixir projects. 
+_Euclid_ is a collection of helper utility modules and functions.
 The code is free for all to use and reuse, as a whole or piecemeal.  Specifically, if you only want a function or
 two, consider copying the code to your own codebase rather than introducing Euclid as a dependency.  You don't need
 to mention the source either.
@@ -23,9 +23,11 @@ Add to `mix.exs`:
 
 As of version `0.2.5`, the `Euclid.Extra.*` and `Euclid.Test.Extra.*` modules are deprecated.
 Use the modules in `Euclid` instead (for example, `Euclid.String` instead of the deprecated `Euclid.Extra.String`).
-`Euclid.Extra.*` and `Euclid.Test.Extra.*` will be removed in the upcoming `1.0` release.
+Some other functions are deprecated too. 
+See the [changelog](https://github.com/geometerio/euclid/blob/main/CHANGELOG.md#v025) for details.
+Deprecated functions and modules will be removed in the upcoming `1.0` release.
 
-## Development
+## Development (of Euclid itself)
 
 ### Getting started
 
@@ -72,7 +74,7 @@ end
 
 ## Copyright and license
 
-Copyright © 2020-2022 Geometer, LLC.  See also [License](LICENSE.md)
+Copyright © 2020-2022 Geometer, LLC.  See also [License](https://github.com/geometerio/euclid/blob/main/LICENSE.md)
 
 ## Random
 
