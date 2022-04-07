@@ -3,7 +3,7 @@ defmodule Euclid.Assertions do
 
   import ExUnit.Assertions
 
-  @type assert_eq_opts() :: [returning: any()]
+  @type assert_eq_opts() :: {:ignore_order, boolean()} | {:returning, any()} | {:within, number() | {number(), Euclid.Duration.time_unit()}}
 
   @deprecated "Use `assert_eq(left, right, within: {delta, unit})` instead"
   def assert_datetime_approximate(left, right, delta \\ 1) do
@@ -33,7 +33,7 @@ defmodule Euclid.Assertions do
   * `within: {delta, time_unit}` - like `within: delta` but performs time comparisons in the specified `time_unit`.
     If `left` and `right` are strings, they are parsed as ISO8601 dates.
   """
-  @spec assert_eq(left :: any(), right :: any(), opts :: assert_eq_opts()) :: any()
+  @spec assert_eq(left :: any(), right :: any(), opts :: [assert_eq_opts()]) :: any()
   def assert_eq(left, right, opts \\ [])
 
   def assert_eq(left, right, opts) when is_list(left) and is_list(right) do
