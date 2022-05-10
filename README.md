@@ -7,7 +7,7 @@ to mention the source either.
 
 ## Resources
 
-- Repo: https://github.com/geometerio/euclid
+- Repo: https://github.com/RatioPBC/euclid
 - Docs: https://hexdocs.pm/euclid/Euclid.html
 - CI: _Coming soon!_
 
@@ -24,7 +24,7 @@ Add to `mix.exs`:
 As of version `0.2.5`, the `Euclid.Extra.*` and `Euclid.Test.Extra.*` modules are deprecated.
 Use the modules in `Euclid` instead (for example, `Euclid.String` instead of the deprecated `Euclid.Extra.String`).
 Some other functions are deprecated too.
-See the [changelog](https://github.com/geometerio/euclid/blob/main/CHANGELOG.md#v025) for details.
+See the [changelog](https://github.com/RatioPBC/euclid/blob/main/CHANGELOG.md#v025) for details.
 Deprecated functions and modules will be removed in the upcoming `1.0` release.
 
 ## Development (of Euclid itself)
@@ -74,7 +74,7 @@ end
 
 ## Copyright and license
 
-Copyright © 2020-2022 Geometer, LLC. See also [License](https://github.com/geometerio/euclid/blob/main/LICENSE.md)
+Copyright © 2020-2022 Ratio PBC, Inc. and Geometer, LLC. See also [License](https://github.com/RatioPBC/euclid/blob/main/LICENSE.md)
 
 ## Random
 
