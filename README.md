@@ -16,7 +16,7 @@ to mention the source either.
 Add to `mix.exs`:
 
 ```elixir
-{:euclid, "~> 0.3.0"}
+{:euclid, "~> 0.4.0"}
 ```
 
 ## Upgrading

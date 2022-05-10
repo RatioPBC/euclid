@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.0
+
+### Additions and changes
+
+- Fix copyright, license and links
+
 ## v0.3.0
 
 ### Additions and changes
