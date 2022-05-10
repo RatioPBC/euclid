@@ -1,29 +1,29 @@
 # Euclid — Tools for Geometers
 
 _Euclid_ is a collection of helper utility modules and functions.
-The code is free for all to use and reuse, as a whole or piecemeal.  Specifically, if you only want a function or
-two, consider copying the code to your own codebase rather than introducing Euclid as a dependency.  You don't need
+The code is free for all to use and reuse, as a whole or piecemeal. Specifically, if you only want a function or
+two, consider copying the code to your own codebase rather than introducing Euclid as a dependency. You don't need
 to mention the source either.
 
 ## Resources
 
-* Repo:    https://github.com/geometerio/euclid
-* Docs:    https://hexdocs.pm/euclid/Euclid.html
-* CI:      _Coming soon!_
+- Repo: https://github.com/geometerio/euclid
+- Docs: https://hexdocs.pm/euclid/Euclid.html
+- CI: _Coming soon!_
 
 ## Installation
 
 Add to `mix.exs`:
 
 ```elixir
-{:euclid, "~> 0.2.5"}
+{:euclid, "~> 0.3.0"}
 ```
 
 ## Upgrading
 
 As of version `0.2.5`, the `Euclid.Extra.*` and `Euclid.Test.Extra.*` modules are deprecated.
 Use the modules in `Euclid` instead (for example, `Euclid.String` instead of the deprecated `Euclid.Extra.String`).
-Some other functions are deprecated too. 
+Some other functions are deprecated too.
 See the [changelog](https://github.com/geometerio/euclid/blob/main/CHANGELOG.md#v025) for details.
 Deprecated functions and modules will be removed in the upcoming `1.0` release.
 
@@ -31,9 +31,9 @@ Deprecated functions and modules will be removed in the upcoming `1.0` release.
 
 ### Getting started
 
-After cloning this repo, run `bin/dev/doctor`. If it finds a problem, it will *suggest* a remedy,
+After cloning this repo, run `bin/dev/doctor`. If it finds a problem, it will _suggest_ a remedy,
 which it will put in the clipboard. If you think the remedy will work well on your computer, paste it into
-your terminal. You can also try a different remedy -- `doctor` is not omnipotent. Then run `doctor` over 
+your terminal. You can also try a different remedy -- `doctor` is not omnipotent. Then run `doctor` over
 and over until it succeeds. (Note: `doctor` may not work well on Windows.)
 
 ### Day to day development
@@ -67,14 +67,14 @@ end
 1. Commit the version file and push using `bin/dev/shipit`
 1. Coming soon: ~~CI will run tests, and if tests pass, it will publish a new patch version in Hex.~~
 1. Publish the new Hex package version: `mix hex.publish package` (include `package` to avoid publishing the docs,
-    which are still too ugly to publish).
+   which are still too ugly to publish).
 1. Once the new version is published:
-    * Change `:local` back to `:remote` in your application's `mix.exs` 
-    * Run `mix deps.update euclid` in your application to get the latest version.
+   - Change `:local` back to `:remote` in your application's `mix.exs`
+   - Run `mix deps.update euclid` in your application to get the latest version.
 
 ## Copyright and license
 
-Copyright © 2020-2022 Geometer, LLC.  See also [License](https://github.com/geometerio/euclid/blob/main/LICENSE.md)
+Copyright © 2020-2022 Geometer, LLC. See also [License](https://github.com/geometerio/euclid/blob/main/LICENSE.md)
 
 ## Random
 
